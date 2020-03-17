@@ -14,10 +14,10 @@ public class Mainsystem {
   
       
       
-     
-  Book_sima konyv1 = new Book_sima("Harry Potter", "JK Rowling", "Studio-kiado", 1996, 658247, "1");
-  Book_sima konyv2 = new Book_sima("Jánosvitéz", "Petőfi Sándor", "Exupery-kiado", 1968, 236514, "2");
-  Book_sima konyv3 = new Book_sima("Csiki Potter", "UK Rowling", "STFiu-kiado", 1996, 362514, "3");
+ /*    
+  Book_sima konyv1 = new Book_sima("Harry Potter", "JK Rowling", "Studio-kiado", "1996", "658247", "1");
+  Book_sima konyv2 = new Book_sima("Jánosvitéz", "Petőfi Sándor", "Exupery-kiado", "1968", "236514", "2");
+  Book_sima konyv3 = new Book_sima("Csiki Potter", "UK Rowling", "STFiu-kiado", "1996", "362514", "3");
   
   Konyvlista lista1 = new Konyvlista();
   lista1.hozzaad(konyv1);

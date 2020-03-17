@@ -25,7 +25,7 @@ public class NewBook extends javax.swing.JFrame {
         super("New Book");
         initComponents();
     }
-    
+       
   
     /**
      * This method is called from within the constructor to initialize the form.
@@ -72,7 +72,7 @@ public class NewBook extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Listing");
+        jButton2.setText("Back");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -147,35 +147,35 @@ public class NewBook extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-   
+    setVisible(false);
+    Mainsystem2 ot = new Mainsystem2();
+    ot.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     
         Book_sima k = new Book_sima();
     k.setCim(jTextField1.getText());
-    k.setKiado(jTextField2.getText());
-    k.setSzerzo(jTextField3.getText());
-    k.setKiadasEve(jTextField4.getX());
-    k.setISBN(jTextField5.getX());
+    k.setSzerzo(jTextField2.getText());
+    k.setKiado(jTextField3.getText());
+    k.setKiadasEve(jTextField4.getText());
+    k.setISBN(jTextField5.getText());
     k.setID(jTextField6.getText());
    
     //Konyvlista k1 = new Konyvlista();
     k1.hozzaad(k);
-    System.out.println("Itt irom ki  "+k);
-    k1.Listazas();
-    
+    k1.Mentes();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {
-
-
-        /* Create and display the form */
+  
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new NewBook().setVisible(true);
             }
         });
+        
+       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
