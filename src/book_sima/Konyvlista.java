@@ -80,7 +80,7 @@ public class Konyvlista implements  Serializable{
   public void Listazas(){
         for(Book_sima konyv : konyvek)
             
-        System.out.println(konyv.toString()+ " Kiado: " + konyv.getKiado()+ " Kiadas eve: " + konyv.getKiadasEve() + " ISBN: " + konyv.getISBN());
+        System.out.println(konyv.toString());
     }
 
  public Boolean Mentes(){
@@ -100,6 +100,7 @@ try{
         }
         return false;
     }
+ 
  public Boolean konyvListaMentesXML(){
     try{
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -177,7 +178,54 @@ try{
         return false;
  
         }
+    public List konyvListaBetoltesXML(){
+        try{
+            File fXmlFile = new File("konyvLista.xml");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(fXmlFile);
+
+	
+            doc.getDocumentElement().normalize();
+
+            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+
+            NodeList nList = doc.getElementsByTagName("Konyv");
+            //Node = Konyvtol konyvig
+            List<Book_sima> ujlista = new ArrayList();
+            for (int temp = 0; temp < nList.getLength(); temp++) {
+
+                Node nNode = nList.item(temp);
+
+                System.out.println("\nCurrent Element :" + nNode.getNodeName());
+                //System.out.println(nNode.getChildNodes());
+                
+                Book_sima k = new Book_sima();
+                
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+                   k.setID(eElement.getAttribute("id"));
+                   k.setCim(eElement.getElementsByTagName("Cim").item(0).getTextContent());
+                   k.setSzerzo(eElement.getElementsByTagName("Szerzo").item(0).getTextContent());
+                   k.setKiado(eElement.getElementsByTagName("Kiado").item(0).getTextContent());
+                   k.setISBN(eElement.getElementsByTagName("ISBN").item(0).getTextContent());
+                   k.setKiadasEve(eElement.getElementsByTagName("KiadasEve").item(0).getTextContent());
+                   ujlista.add(k);
+                }
+            }
+          return ujlista;
+            
+            
+            
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+        
     }
+ 
+}
 
         
 

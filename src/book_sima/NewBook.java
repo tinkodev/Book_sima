@@ -21,6 +21,8 @@ import javax.swing.JOptionPane;
  */
 public class NewBook extends javax.swing.JFrame {
 
+
+
     public NewBook() {
         super("New Book");
         initComponents();
@@ -84,9 +86,9 @@ public class NewBook extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
@@ -101,13 +103,14 @@ public class NewBook extends javax.swing.JFrame {
                             .addComponent(jTextField3)
                             .addComponent(jTextField4)
                             .addComponent(jTextField5)
-                            .addComponent(jTextField6)))
+                            .addComponent(jTextField6))
+                        .addContainerGap(20, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
+                        .addGap(21, 21, 21)
                         .addComponent(jButton1)
-                        .addGap(49, 49, 49)
-                        .addComponent(jButton2)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addGap(49, 49, 49))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,10 +167,10 @@ public class NewBook extends javax.swing.JFrame {
    
     //Konyvlista k1 = new Konyvlista();
     k1.hozzaad(k);
-    k1.Mentes();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {
+        k1 = new Konyvlista();
   
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
