@@ -30,7 +30,7 @@ public class Felhasznalo implements Serializable{
     }
     @Override
     public String toString(){
-        return ("Nev: " + this.nev +  " Address: " + this.elerhetoseg.toString() + " CNP: " + this.CNP + " ID: " + this.ID);
+        return "Nev: " + nev +  " Address: " +  " CNP: " + CNP + " ID: " + ID;
     }
 
     public String getNev() {

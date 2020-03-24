@@ -91,7 +91,9 @@ public class Felhasznalo_lista implements  Serializable{
             //ObjectOutputStream out = new ObjectOutputStream(file);
             List<Felhasznalo> ujLista = new ArrayList<Felhasznalo>();
             ujLista = (List<Felhasznalo>) out2.readObject();
-            System.out.println("Sikeres beovasas");
+            for(Felhasznalo user : ujLista){
+             System.out.println(user);
+            }
             return true;
         }catch(Exception e){
             e.printStackTrace();
