@@ -17,6 +17,9 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -33,7 +36,7 @@ import org.w3c.dom.NodeList;
 
 public class Konyvlista implements  Serializable{
     
-    private List<Book_sima> konyvek; 
+    public List<Book_sima> konyvek; 
     
     public Konyvlista(){
         konyvek = new ArrayList<Book_sima>();
@@ -45,6 +48,10 @@ public class Konyvlista implements  Serializable{
             
         }
         return null;
+    }
+    
+    public int meret(){
+    return konyvek.size();
     }
     
     public void hozzaad(Book_sima konyv){
@@ -60,6 +67,20 @@ public class Konyvlista implements  Serializable{
         }
         return false;
     }
+    
+    public void removeSelectedFromTable(JTable from)
+{
+    int[] rows = from.getSelectedRows();
+    TableModel tm= from.getModel();
+
+    while(rows.length>0)
+    {
+        ((DefaultTableModel)tm).removeRow(from.convertRowIndexToModel(rows[0]));
+
+        rows = from.getSelectedRows();
+    }
+    from.clearSelection();
+}
     
     public Boolean modositas(String Id, Book_sima konyv){
         for(Book_sima konyvElem : konyvek){
@@ -165,9 +186,8 @@ try{
         try{
             FileInputStream file = new FileInputStream("konyvek.txt");
             ObjectInputStream out2 = new ObjectInputStream(file);
-            List<Book_sima> ujLista = new ArrayList<Book_sima>();
-            ujLista = (List<Book_sima>) out2.readObject();
-            for(Book_sima book : ujLista){
+            konyvek = (List<Book_sima>) out2.readObject();
+            for(Book_sima book : konyvek){
             System.out.println(book);
             } 
             return true;
@@ -192,7 +212,6 @@ try{
 
             NodeList nList = doc.getElementsByTagName("Konyv");
             //Node = Konyvtol konyvig
-            List<Book_sima> ujlista = new ArrayList();
             for (int temp = 0; temp < nList.getLength(); temp++) {
 
                 Node nNode = nList.item(temp);
@@ -210,10 +229,10 @@ try{
                    k.setKiado(eElement.getElementsByTagName("Kiado").item(0).getTextContent());
                    k.setISBN(eElement.getElementsByTagName("ISBN").item(0).getTextContent());
                    k.setKiadasEve(eElement.getElementsByTagName("KiadasEve").item(0).getTextContent());
-                   ujlista.add(k);
+                   konyvek.add(k);
                 }
             }
-          return ujlista;
+          return konyvek;
             
             
             

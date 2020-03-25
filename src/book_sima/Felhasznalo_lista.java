@@ -22,6 +22,9 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -40,7 +43,7 @@ import org.w3c.dom.NodeList;
  * @author Exodia
  */
 public class Felhasznalo_lista implements  Serializable{
-    private List<Felhasznalo> userList;
+    public List<Felhasznalo> userList;
     
     public Felhasznalo_lista(){
         userList = new ArrayList<Felhasznalo>();
@@ -68,6 +71,10 @@ public class Felhasznalo_lista implements  Serializable{
         return false;
      }
      
+      public int meret(){
+    return userList.size();
+    }
+     
      public Boolean modosit(String CNP, Felhasznalo user){
          for(Felhasznalo u: userList){
              if(u.getCNP().equals(CNP) ){
@@ -78,6 +85,20 @@ public class Felhasznalo_lista implements  Serializable{
          }
          return false;
      }
+     
+     public void removeSelectedFromTable(JTable from)
+{
+    int[] rows = from.getSelectedRows();
+    TableModel tm= from.getModel();
+
+    while(rows.length>0)
+    {
+        ((DefaultTableModel)tm).removeRow(from.convertRowIndexToModel(rows[0]));
+
+        rows = from.getSelectedRows();
+    }
+    from.clearSelection();
+}
      public void kiListaz(){
         for(Felhasznalo user : userList)
             
@@ -111,7 +132,7 @@ public class Felhasznalo_lista implements  Serializable{
         doc.appendChild(rootElement);
         
         for(Felhasznalo u : userList){
-                Element user = doc.createElement("User");
+                Element user = doc.createElement("ID");
                 rootElement.appendChild(user);
                 user.setAttribute("id", u.getCNP());
                 
@@ -119,23 +140,14 @@ public class Felhasznalo_lista implements  Serializable{
                 name.appendChild(doc.createTextNode(u.getNev()));
                 user.appendChild(name);
                 
-                    Element contactAddress = doc.createElement("Elerhetoseg");
-
-                    Element telSzam = doc.createElement("telSzam");
-                    telSzam.appendChild(doc.createTextNode(u.getElerhetoseg().getTelSzam()));
-
-                    Element utcaNev = doc.createElement("UtcaNev");
-                    utcaNev.appendChild(doc.createTextNode(u.getElerhetoseg().getUtcaNev()));
-
-                    Element email = doc.createElement("Email");
-                    email.appendChild(doc.createTextNode(u.getElerhetoseg().getEmail()));
-
-                    contactAddress.appendChild(telSzam);
-                    contactAddress.appendChild(utcaNev);
-                    contactAddress.appendChild(email);
-                    
-                user.appendChild(contactAddress);
-
+                 Element ujelszo = doc.createElement("Jelszo");
+                 name.appendChild(doc.createTextNode(u.getJelszo()));
+                 user.appendChild(ujelszo);
+                 
+                 Element uCNP = doc.createElement("CNP");
+                 name.appendChild(doc.createTextNode(u.getCNP()));
+                 user.appendChild(uCNP);
+                
             }
          // write the content into xml file
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -158,10 +170,8 @@ public class Felhasznalo_lista implements  Serializable{
         try{
             FileInputStream file = new FileInputStream(filename);
             ObjectInputStream out2 = new ObjectInputStream(file);
-            //ObjectOutputStream out = new ObjectOutputStream(file);
-            List<Felhasznalo> ujLista = new ArrayList<Felhasznalo>();
-            ujLista = (List<Felhasznalo>) out2.readObject();
-            for(Felhasznalo user : ujLista){
+            userList = (List<Felhasznalo>) out2.readObject();
+            for(Felhasznalo user : userList){
              System.out.println(user);
             }
             return true;
@@ -171,7 +181,7 @@ public class Felhasznalo_lista implements  Serializable{
         }
         return false;
     } 
-    public void userListBetoltesXML(){
+    public List userListBetoltesXML(){
         try{
             File fXmlFile = new File("userLista.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -182,28 +192,31 @@ public class Felhasznalo_lista implements  Serializable{
 
             System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
             NodeList nList = doc.getElementsByTagName("User");
-            
+                     
             for (int temp = 0; temp < nList.getLength(); temp++) {
 
                 Node nNode = nList.item(temp);
 
                 System.out.println("\nCurrent Element :" + nNode.getNodeName());
+                
+                Felhasznalo k = new Felhasznalo();
 
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
                     Element eElement = (Element) nNode;
-
-                    System.out.println("ID : " + eElement.getAttribute("id"));
-                    System.out.println("Nev : " + eElement.getElementsByTagName("Nev").item(0).getTextContent());
-                    
-                    System.out.println("Telefonszam : " + eElement.getElementsByTagName("telSzam").item(0).getTextContent());
-                    System.out.println("Utca/hazszam : " + eElement.getElementsByTagName("UtcaNev").item(0).getTextContent());
-                    System.out.println("Email : " + eElement.getElementsByTagName("Email").item(0).getTextContent());
+                   k.setID(eElement.getAttribute("id"));
+                   k.setNev(eElement.getElementsByTagName("Nev").item(0).getTextContent());
+                   k.setJelszo(eElement.getElementsByTagName("Jelszo").item(0).getTextContent());
+                   k.setCNP(eElement.getElementsByTagName("CNP").item(0).getTextContent());
+                   userList.add(k);
                 }
             }
+                return userList;
+            
         }catch(Exception e){
             e.printStackTrace();
         }
+        return null;
     } 
     
 }
