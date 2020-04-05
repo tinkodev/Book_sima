@@ -167,6 +167,10 @@ public class NewBook extends javax.swing.JFrame {
    
     //Konyvlista k1 = new Konyvlista();
     k1.hozzaad(k);
+    setVisible(false);
+    Mainsystem2 ot = new Mainsystem2();
+    ot.setVisible(true);
+    ot.jMenuItem6.doClick();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {

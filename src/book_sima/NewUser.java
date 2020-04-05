@@ -141,7 +141,13 @@ public class NewUser extends javax.swing.JFrame {
     k.setCNP(jTextField3.getText());
     k.setID(jTextField4.getText());
    
-    k2.hozzaad(k);      // TODO add your handling code here:
+    k2.hozzaad(k);  
+
+    setVisible(false);
+    Mainsystem2 ot = new Mainsystem2();
+    ot.setVisible(true);
+    
+    ot.jMenuItem16.doClick();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
