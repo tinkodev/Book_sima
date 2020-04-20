@@ -44,12 +44,10 @@ public class Konyvlista implements  Serializable{
     public  Book_sima keres(String ID){
         for(Book_sima konyv : konyvek){
             if(konyv.getID().equals(ID))
-                return konyv;
-            
+                return konyv;  
         }
         return null;
     }
-    
     public int meret(){
     return konyvek.size();
     }
@@ -62,8 +60,7 @@ public class Konyvlista implements  Serializable{
             if(konyv.getID().equals(ID)){
                 konyvek.remove(konyv);
             return true;
-            }
-                
+            }       
         }
         return false;
     }
@@ -90,6 +87,7 @@ public class Konyvlista implements  Serializable{
                 konyvElem.setKiadasEve(konyv.getKiadasEve());
                 konyvElem.setKiado(konyv.getKiado());
                 konyv.setSzerzo(konyv.getSzerzo());
+                konyv.setKolcsonozheto(konyv.getKolcsonozheto());
                 return true;
             }
 

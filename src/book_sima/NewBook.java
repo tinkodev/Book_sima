@@ -157,13 +157,14 @@ public class NewBook extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     
-        Book_sima k = new Book_sima();
+    Book_sima k = new Book_sima();
     k.setCim(jTextField1.getText());
     k.setSzerzo(jTextField2.getText());
     k.setKiado(jTextField3.getText());
     k.setKiadasEve(jTextField4.getText());
     k.setISBN(jTextField5.getText());
     k.setID(jTextField6.getText());
+    k.setKolcsonozheto("1");
    
     //Konyvlista k1 = new Konyvlista();
     k1.hozzaad(k);

@@ -135,6 +135,11 @@ public class Mainsystem2 extends javax.swing.JFrame {
         jScrollPane13.setViewportView(jTable13);
 
         jButton1.setText("Kölcsönzés");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -323,7 +328,7 @@ public class Mainsystem2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-     setVisible(false);
+    setVisible(false);
     NewUser ot = new NewUser();
     ot.setVisible(true);      
     }//GEN-LAST:event_jMenuItem14ActionPerformed
@@ -339,15 +344,15 @@ public class Mainsystem2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-        k1.keres(" ");
+
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
 
         if(TableModel.getRowCount() < 1){
             for(int i=0 ;i < k1.meret(); ++i){
-              TableModel.insertRow(TableModel.getRowCount(), new Object[]{k1.konyvek.get(i).getID(), k1.konyvek.get(i).getCim(), k1.konyvek.get(i).getSzerzo(),
-                                        k1.konyvek.get(i).getKiado(), k1.konyvek.get(i).getKiadasEve(),k1.konyvek.get(i).getISBN()});
+              TableModel.insertRow(TableModel.getRowCount(), new Object[]{k1.konyvek.get(i).getCim(), k1.konyvek.get(i).getSzerzo(),
+                                        k1.konyvek.get(i).getKiado(), k1.konyvek.get(i).getKiadasEve(),k1.konyvek.get(i).getISBN(),k1.konyvek.get(i).getID()});
             }
         
         }
@@ -397,12 +402,33 @@ public class Mainsystem2 extends javax.swing.JFrame {
     jMenuItem16.doClick();// TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    int i = jTable1.getSelectedRow();
+    int j = jTable13.getSelectedRow();
+    String nev = (String) TableModel13.getValueAt(j,1);
+    String kID = (String) TableModel.getValueAt(i,5);
+    String uID = (String) TableModel13.getValueAt(i,0);
+    System.out.println("Az: " + kID + "-ju konyvet " + nev + " szeretné kolcsonozni!");
+    Book_sima k = new Book_sima();
+    k = k1.keres(kID);
+    Felhasznalo u = new Felhasznalo();
+    u = k2.keres(uID);
+    Kolcsonzes kz = new Kolcsonzes();
+    kz.setKonvy(k);
+    kz.setUser(u);
+    k3.hozzaad(kz);
+    setVisible(false);
+    Kolcson ot = new Kolcson();
+    ot.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
        k1 = new Konyvlista();
        k2 = new Felhasznalo_lista();
+       k3 = new Kolcson_lista();
         
         
         try {
@@ -432,6 +458,7 @@ public class Mainsystem2 extends javax.swing.JFrame {
     }
 public static Konyvlista k1;
 public static Felhasznalo_lista k2;
+public static Kolcson_lista k3;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;

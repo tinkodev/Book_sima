@@ -19,8 +19,11 @@ public class Book_sima implements Serializable {
     private String kiadasEve;
     private String ISBN;
     private String ID;
-    
-public Book_sima(String cim, String szerzo, String kiado, String kiadasEve, String ISBN, String ID){
+    private String kolcsonozheto;
+
+ 
+
+public Book_sima(String cim, String szerzo, String kiado, String kiadasEve, String ISBN, String ID,String kolcsonozheto){
         this.cim = cim;
         this.szerzo = szerzo;
         this.kiado = kiado;
@@ -28,6 +31,7 @@ public Book_sima(String cim, String szerzo, String kiado, String kiadasEve, Stri
         this.cim = cim;
         this.kiadasEve = kiadasEve;
         this.ID = ID;
+        this.kolcsonozheto = kolcsonozheto;
     }
 
 public Book_sima(){
@@ -55,6 +59,9 @@ public Book_sima(){
     public void setID(String ID) {
         this.ID = ID;
     }
+   public void setKolcsonozheto(String kolcsonozheto) {
+        this.kolcsonozheto = kolcsonozheto;
+    }
 
     public String getCim() {
         return cim;
@@ -80,9 +87,13 @@ public Book_sima(){
         return ID;
     }
     
+      public String getKolcsonozheto() {
+        return kolcsonozheto;
+    }
+    
     public String toString(){
         
-        return "Szerzo: " + szerzo + " Cim: " + cim + " Kiado : " + kiado + " KiadasEve : " + kiadasEve + " ISBN : " + ISBN + " ID : " + ID ;
+        return  "Cim: " + cim + " Szerzo: " + szerzo + " Kiado : " + kiado + " KiadasEve : " + kiadasEve + " ISBN : " + ISBN + " ID : " + ID ;
     }
     
 }

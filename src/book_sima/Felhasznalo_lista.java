@@ -9,7 +9,6 @@ package book_sima;
  *
  * @author tinkd
  */
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -52,7 +51,7 @@ public class Felhasznalo_lista implements  Serializable{
      public Felhasznalo keres(String ID){
          
              for(Felhasznalo user : userList){
-            if(user.getCNP().equals(ID))
+            if(user.getID().equals(ID))
                 return user;
             
         }

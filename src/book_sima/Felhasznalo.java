@@ -22,7 +22,7 @@ public class Felhasznalo implements Serializable{
         
     }
     
-    public Felhasznalo(String nev, Kontakt elerhetoseg, String CNP,String ID){
+    public Felhasznalo(String nev, String jelszo, String CNP,String ID){
         this.nev = nev;
         this.elerhetoseg = elerhetoseg;
         this.CNP = CNP;
@@ -30,7 +30,7 @@ public class Felhasznalo implements Serializable{
     }
     @Override
     public String toString(){
-        return "Nev: " + nev +  " Address: " +  " CNP: " + CNP + " ID: " + ID;
+        return "ID: " + ID + " Nev: " + nev +  " Jelszo: " + jelszo + " CNP: " + CNP;
     }
 
     public String getNev() {
