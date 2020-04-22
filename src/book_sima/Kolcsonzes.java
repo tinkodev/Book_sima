@@ -5,6 +5,7 @@
  */
 package book_sima;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  *
  * @author tinkd
  */
-public class Kolcsonzes {
+public class Kolcsonzes implements Serializable {
     String ID;
     String Datum;
     Book_sima konvy;

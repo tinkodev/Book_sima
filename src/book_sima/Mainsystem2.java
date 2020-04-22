@@ -6,7 +6,12 @@
 package book_sima;
 
 import java.awt.PopupMenu;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -51,6 +56,7 @@ public class Mainsystem2 extends javax.swing.JFrame {
         jScrollPane13 = new javax.swing.JScrollPane();
         jTable13 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -138,6 +144,13 @@ public class Mainsystem2 extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Kölcsönzöttek");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -288,13 +301,15 @@ public class Mainsystem2 extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(250, 250, 250)
+                .addGap(53, 53, 53)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(276, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(99, 99, 99))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,9 +317,11 @@ public class Mainsystem2 extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                     .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(26, 26, 26)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
@@ -351,12 +368,12 @@ public class Mainsystem2 extends javax.swing.JFrame {
 
         if(TableModel.getRowCount() < 1){
             for(int i=0 ;i < k1.meret(); ++i){
+                if(k1.konyvek.get(i).getKolcsonozheto().equals("1"))
               TableModel.insertRow(TableModel.getRowCount(), new Object[]{k1.konyvek.get(i).getCim(), k1.konyvek.get(i).getSzerzo(),
                                         k1.konyvek.get(i).getKiado(), k1.konyvek.get(i).getKiadasEve(),k1.konyvek.get(i).getISBN(),k1.konyvek.get(i).getID()});
             }
         
         }
-         //k1.Listazas();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -405,22 +422,39 @@ public class Mainsystem2 extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     int i = jTable1.getSelectedRow();
     int j = jTable13.getSelectedRow();
+    Date date = Calendar.getInstance().getTime();  
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+    String ID =String.valueOf(k3.meret()+1);
+    String strDate = dateFormat.format(date);
     String nev = (String) TableModel13.getValueAt(j,1);
     String kID = (String) TableModel.getValueAt(i,5);
     String uID = (String) TableModel13.getValueAt(i,0);
-    System.out.println("Az: " + kID + "-ju konyvet " + nev + " szeretné kolcsonozni!");
+    System.out.println("Az: " + kID + "-ju konyvet " + nev + " szeretné kolcsonozni!");  
     Book_sima k = new Book_sima();
     k = k1.keres(kID);
+    k.setKolcsonozheto("0");
+    k1.modositas(ID, k);
+    k1.Mentes();
     Felhasznalo u = new Felhasznalo();
     u = k2.keres(uID);
     Kolcsonzes kz = new Kolcsonzes();
+    kz.setDatum(strDate);
+    kz.setID(ID);
+    System.out.println(strDate);
     kz.setKonvy(k);
     kz.setUser(u);
     k3.hozzaad(kz);
+    k3.Mentes();
     setVisible(false);
     Kolcson ot = new Kolcson();
     ot.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    setVisible(false);
+    Kolcson ot = new Kolcson();
+    ot.setVisible(true);  // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -461,6 +495,7 @@ public static Felhasznalo_lista k2;
 public static Kolcson_lista k3;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JMenu jMenu1;
     public javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -494,8 +529,8 @@ public static Kolcson_lista k3;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable13;
+    public javax.swing.JTable jTable1;
+    public javax.swing.JTable jTable13;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
     private java.awt.MenuBar menuBar1;

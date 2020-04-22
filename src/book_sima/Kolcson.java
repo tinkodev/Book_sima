@@ -5,7 +5,10 @@
  */
 package book_sima;
 
+import static book_sima.Mainsystem2.k1;
+import static book_sima.Mainsystem2.k2;
 import static book_sima.Mainsystem2.k3;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,9 +16,11 @@ import static book_sima.Mainsystem2.k3;
  */
 public class Kolcson extends javax.swing.JFrame {
 
+ DefaultTableModel TableModel,TableModel13;
  
     public Kolcson() {
         initComponents();
+        TableModel = (DefaultTableModel) jTable1.getModel();
     }
 
     /**
@@ -28,8 +33,13 @@ public class Kolcson extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu1 = new javax.swing.JMenu();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -38,7 +48,40 @@ public class Kolcson extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nev", "Cim", "ID", "Datum"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jButton1.setText("Vissza");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         jMenu2.setText("Kolcsonzottek");
+
+        jMenuItem3.setText("Import");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem3);
+
+        jMenuItem4.setText("Export");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem4);
 
         jMenuItem1.setText("List");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -53,6 +96,11 @@ public class Kolcson extends javax.swing.JFrame {
         jMenu3.setText("Visszaadas");
 
         jMenuItem2.setText("Visszavisz");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem2);
 
         jMenuBar1.add(jMenu3);
@@ -63,25 +111,69 @@ public class Kolcson extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton1))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(jButton1))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-
+if(TableModel.getRowCount() < 1)
+            for(int i=0 ;i < k3.meret(); ++i){
+              TableModel.insertRow(TableModel.getRowCount(), new Object[]{k3.kolcson.get(i).user.getNev(),k3.kolcson.get(i).konvy.getCim(),k3.kolcson.get(i).getID(),k3.kolcson.get(i).getDatum()});
+            }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    k3.KolcsonListaBetoltes();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    setVisible(false);
+    Mainsystem2 ot = new Mainsystem2();
+    ot.setVisible(true);// TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    int v = jTable1.getSelectedRow();
+    System.out.println(" " + v);
+    String KolcsonzesID = (String) TableModel.getValueAt(v,2);
+    Kolcsonzes kz = new Kolcsonzes();
+    Book_sima k = new Book_sima();
+    k = k3.keres(KolcsonzesID).getKonvy();
+    k.setKolcsonozheto("1");
+    String konyvid = k.getID();
+    System.out.println("Konyv id: "+konyvid);
+    k1.modositas(konyvid,k);
+    System.out.println("Kolcsonozheto ertek: "+k1.keres(konyvid).getKolcsonozheto());
+    k1.Mentes();
+    System.out.println("Torolni kivant Id : " + KolcsonzesID);
+    k3.removeSelectedFromTable(jTable1);
+    k3.torol(KolcsonzesID);
+    k3.Mentes();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+     k3.Mentes();        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        k3 = new Kolcson_lista();
+       /*k1 = new Konyvlista();
+       k2 = new Felhasznalo_lista();
+       k3 = new Kolcson_lista();*/
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -90,13 +182,20 @@ public class Kolcson extends javax.swing.JFrame {
             }
         });
     }
-    public static Kolcson_lista k3;
+/*public static Konyvlista k1;
+public static Felhasznalo_lista k2;
+public static Kolcson_lista k3;*/
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

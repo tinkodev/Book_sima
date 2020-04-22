@@ -217,5 +217,6 @@ public class Felhasznalo_lista implements  Serializable{
         }
         return null;
     } 
+
     
 }
